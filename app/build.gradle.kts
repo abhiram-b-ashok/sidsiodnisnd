@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
 }
 
 android {
@@ -59,5 +60,7 @@ dependencies {
 
     implementation("org.json:json:20240303")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 
 }

@@ -7,26 +7,24 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
 import com.example.coroutinedemo.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
+import com.example.coroutinedemo.model.User
+import com.example.coroutinedemo.model.UserRootModel
+import com.example.coroutinedemo.model.parseUserData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.json.JSONObject
-import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: ViewModelDemo by viewModels()
-
+//    private var page = 1
+//    private val limit = 2
+//    private var isLoading = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,43 +43,79 @@ class MainActivity : AppCompatActivity() {
 //            binding.textView.text = text
 
 
+//        lifecycleScope.launch {
+//
+//            withContext(Dispatchers.Main) {
+//                val response =
+//                    viewModel.getRequest("https://mocki.io/v1/09a2dd97-3a31-4047-87f6-6981a5c14566")
+//                Log.d("TAG_jsonRESPONSE_1", "onCreate:$response ")
+//                try {
+//
+//                    val datas = mutableListOf<FetchedData>()
+//                    val jsonObject = JSONObject(response)
+//                    Log.d("TAG_jsonRESPONSE_2", "onCreate: $jsonObject")
+//                    val jsonArray = jsonObject.getJSONArray("result")
+//                    Log.i("jsonArray", "$jsonArray")
+//                    for (i in 0 until jsonArray.length()) {
+//                        val dataObject = jsonArray.getJSONObject(i)
+//                        val name = dataObject.getString("name")
+//                        val price = dataObject.getInt("price")
+//                        val quantity = dataObject.getString("available_quanity")
+//                        datas.add(FetchedData(name, price, quantity))
+//                    }
+//                    Log.i("parseddata", "$datas")
+//                    binding.apiRecyclerView.adapter = ApiAdapter(datas)
+//
+//
+////                    binding.textView.setText("$name,$age,$address")
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
+//            }
+//
+//
+//        }
+
         lifecycleScope.launch {
-            val response = viewModel.getRequest("https://mocki.io/v1/09a2dd97-3a31-4047-87f6-6981a5c14566")
-            withContext(Dispatchers.Main) {
-                Log.d("TAG_jsonRESPONSE_1", "onCreate:$response ")
-                try {
+            val response = viewModel.getRequest2("https://reqres.in/api/users")
+            println(response)
+            try {
 
-                    val datas = mutableListOf<FetchedData>()
-                    val jsonObject = JSONObject(response)
-                    Log.d("TAG_jsonRESPONSE_2", "onCreate: $jsonObject")
-                    val jsonArray = jsonObject.getJSONArray("result")
-                    Log.i("jsonArray", "$jsonArray")
-                    for (i in 0 until jsonArray.length()) {
-                        val dataObject = jsonArray.getJSONObject(i)
-                        val name = dataObject.getString("name")
-                        val price = dataObject.getInt("price")
-                        val quantity = dataObject.getString("available_quanity")
-                        datas.add(FetchedData(name, price, quantity))
-                    }
-                    Log.i("parseddata", "$datas")
+                val datas = mutableListOf<User>()
+                val rootModel = UserRootModel(
+                    page = response.data?.getInt("page") ?: 0,
+                    perPage = response.data?.getInt("per_page") ?: 0,
+                    list = response.data?.getJSONArray("data")?.parseUserData()?: arrayListOf()
 
-                    binding.apiRecyclerView.adapter = ApiAdapter(datas)
+                )
+                println(rootModel.list)
 
+                binding.userApiRecycler.adapter = UserApiAdapter(rootModel.list)
 
-//                    binding.textView.setText("$name,$age,$address")
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-
+//           binding.userApiRecycler.addOnScrollListener(object :RecyclerView.OnScrollListener()
+//           {
+//               override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                   super.onScrolled(recyclerView, dx, dy)
+//                   if(!recyclerView.canScrollVertically(1)&& !isLoading && page <= limit ){
+//
+//                       page++
+//
+//                   }
+//               }
+//           })
         }
-
 
     }
 
 
+
+
 }
+
+
 
 
 
