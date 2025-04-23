@@ -49,18 +49,18 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
-    implementation ("androidx.core:core-ktx:1.15.0")
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.runtime.ktx)
+    implementation (libs.androidx.core.ktx.v1150)
 
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-
-    implementation("org.json:json:20240303")
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.okhttp)
+    implementation(libs.json)
+    implementation(libs.gson)
+    implementation(libs.glide)
+    implementation(libs.logging.interceptor)
 
 
 }

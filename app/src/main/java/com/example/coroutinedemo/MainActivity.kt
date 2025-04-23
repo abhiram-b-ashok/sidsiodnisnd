@@ -2,6 +2,7 @@ package com.example.coroutinedemo
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,25 +23,31 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: ViewModelDemo by viewModels()
+    val list = mutableListOf<User>()
+    var currentPage = 1
+    var lastPage = 1
 //    private var page = 1
 //    private val limit = 2
 //    private var isLoading = false
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+        insets
+    }
+
+
+
 //        val textObserver = Observer<String> { text ->
 //            binding.textView.text = text
 //        }
 //        viewModel.getInput().observe(this, textObserver)
-//       viewModel.getInput().observe(this){text->
-//            binding.textView.text = text
+ //   viewModel.getInput().observe(this) { text ->
+        //  binding.textView.text = text
 
 
 //        lifecycleScope.launch {
@@ -75,44 +82,50 @@ class MainActivity : AppCompatActivity() {
 //
 //
 //        }
+   // }
 
+    binding.userApiRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (!recyclerView.canScrollVertically(1) && dy > 0)
+            {
+                Toast.makeText(application,"bottom", Toast.LENGTH_LONG).show()
+            }else if (!recyclerView.canScrollVertically(-1) && dy < 0)
+            {
+                Toast.makeText(application,"top", Toast.LENGTH_LONG).show()
+            }
+        }
+    })
+
+    binding.btnSeeMore.setOnClickListener {
+        if (currentPage <= lastPage){
+            currentPage++
+            apiCall()
+        }
+    }
+      apiCall()
+    }
+
+    fun apiCall(){
         lifecycleScope.launch {
-            val response = viewModel.getRequest2("https://reqres.in/api/users")
-            println(response)
+            val response = viewModel.getRequest2(currentPage)
+            Log.e("response","<<<<<<< $response")
             try {
-
-                val datas = mutableListOf<User>()
                 val rootModel = UserRootModel(
                     page = response.data?.getInt("page") ?: 0,
                     perPage = response.data?.getInt("per_page") ?: 0,
-                    list = response.data?.getJSONArray("data")?.parseUserData()?: arrayListOf()
-
+                    list = response.data?.getJSONArray("data")?.parseUserData() ?: arrayListOf(),
+                    lastPage = response.data?.getInt("total_pages") ?: 1
                 )
-                println(rootModel.list)
-
-                binding.userApiRecycler.adapter = UserApiAdapter(rootModel.list)
+                lastPage = rootModel.lastPage
+                list.addAll(rootModel.list)
+                binding.userApiRecycler.adapter = UserApiAdapter(list.toList())
 
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-//           binding.userApiRecycler.addOnScrollListener(object :RecyclerView.OnScrollListener()
-//           {
-//               override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                   super.onScrolled(recyclerView, dx, dy)
-//                   if(!recyclerView.canScrollVertically(1)&& !isLoading && page <= limit ){
-//
-//                       page++
-//
-//                   }
-//               }
-//           })
         }
-
     }
-
-
-
-
 }
 
 
