@@ -11,6 +11,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 
+
 class ViewModelDemo : ViewModel() {
     private val inputs: MutableLiveData<String> = MutableLiveData()
 
@@ -45,6 +46,7 @@ class ViewModelDemo : ViewModel() {
 
         try {
 
+          //Create Http Url
           val url = HttpUrl.Builder()
               .scheme("https")
               .host("reqres.in")
@@ -53,22 +55,27 @@ class ViewModelDemo : ViewModel() {
               .addQueryParameter("page",pageCount.toString())
               .build()
 
+            //Create Request
             val request = Request
                 .Builder()
                 .url(url)
                 .get()
                 .build()
 
+            //Create Instance of OkHttpClient
             val httpClient = OkHttpClient()
                 .newBuilder()
-                .addInterceptor(HttpLoggingInterceptor())
+                //.addInterceptor(HttpLoggingInterceptor())
                 .build()
 
+            //Get Response  Calling Request Using OkHttpClient
             val response = httpClient.newCall(
                 request).execute()
+
             code = response.code
             msg = response.message
             json = response.body?.string()?.let { JSONObject(it) }
+
         } catch (ex: Exception) {
             exception = ex
         }

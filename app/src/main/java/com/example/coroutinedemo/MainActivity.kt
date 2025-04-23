@@ -1,7 +1,9 @@
 package com.example.coroutinedemo
 
+import android.graphics.pdf.PdfDocument.Page
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -14,9 +16,13 @@ import com.example.coroutinedemo.databinding.ActivityMainBinding
 import com.example.coroutinedemo.model.User
 import com.example.coroutinedemo.model.UserRootModel
 import com.example.coroutinedemo.model.parseUserData
+import com.example.coroutinedemo.utils.hide
+import com.example.coroutinedemo.utils.invisible
+import com.example.coroutinedemo.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.HttpUrl
 import org.json.JSONObject
 
 
@@ -39,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
         insets
     }
+
+    buildSampleUrl(currentPage = 1000)
 
 
 
@@ -84,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 //        }
    // }
 
-    binding.userApiRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+   /* binding.userApiRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             if (!recyclerView.canScrollVertically(1) && dy > 0)
@@ -95,18 +103,20 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(application,"top", Toast.LENGTH_LONG).show()
             }
         }
-    })
+    })*/
 
     binding.btnSeeMore.setOnClickListener {
         if (currentPage <= lastPage){
             currentPage++
+            if (currentPage == lastPage)
+                binding.btnSeeMore.hide()
             apiCall()
         }
     }
       apiCall()
     }
 
-    fun apiCall(){
+    private fun apiCall(){
         lifecycleScope.launch {
             val response = viewModel.getRequest2(currentPage)
             Log.e("response","<<<<<<< $response")
@@ -126,7 +136,37 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun buildSampleUrl(currentPage: Int){
+        val url = HttpUrl.Builder()
+            .scheme("https")
+            .host("google.com")
+            .addPathSegment("v1")
+            .addPathSegment("h2")
+            .addQueryParameter("page",currentPage.toString())
+            .build()
+
+        Log.e("url","<<<<< $url")
+    }
 }
+
+/**
+ * //Posts
+ *  Get Posts  Url - https://jsonplaceholder.typicode.com/posts
+ *  Get Post Details - https://jsonplaceholder.typicode.com/posts/1
+ *
+ * //Comments
+ * Get Url for comments - https://jsonplaceholder.typicode.com/comments
+ *
+ * //Todo List
+ * Url for todo list --- https://jsonplaceholder.typicode.com/todos
+ *
+ * **/
+
+/***
+ *  GET - QueryPara
+ *  POST - FormData
+ * */
 
 
 
