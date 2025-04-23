@@ -3,6 +3,6 @@
     <string name="user_id">User Id</string>
     <string name="title">Title</string>
     <string name="body">Body</string>
-    <string name="get_requests">Get Requests</string>
+    <string name="get_requests">Posts</string>
     <string name="get_posts">Get Posts</string>
 </resources>

@@ -15,7 +15,7 @@
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/get_requests"
-        android:id="@+id/testHeader"
+        android:id="@+id/test_header"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -25,7 +25,7 @@
         android:id="@+id/getPostRecycler"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/testHeader"
+        app:layout_constraintTop_toBottomOf="@+id/test_header"
         android:visibility="visible"/>
 
 

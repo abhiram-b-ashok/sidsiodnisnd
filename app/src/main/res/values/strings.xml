@@ -5,6 +5,6 @@
     <string name="body">Body</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="get_requests">Get Requests</string>
+    <string name="get_requests">Posts</string>
     <string name="get_posts">Get Posts</string>
 </resources>
