@@ -5,4 +5,9 @@
     <string name="body">Body</string>
     <string name="get_requests">Posts</string>
     <string name="get_posts">Get Posts</string>
+    <string name="todo">ToDo</string>
+    <string name="posts">Posts</string>
+    <string name="completed">Completed</string>
+    <string name="name">Name</string>
+    <string name="id">Id</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.coroutinedemo.model
+package com.example.coroutinedemo.demo_app_api
 
 import org.json.JSONArray
 

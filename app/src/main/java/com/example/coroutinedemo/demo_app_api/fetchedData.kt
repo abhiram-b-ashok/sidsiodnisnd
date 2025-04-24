@@ -1,4 +1,4 @@
-package com.example.coroutinedemo
+package com.example.coroutinedemo.demo_app_api
 
 data class FetchedData(
 val name:String,

@@ -4,14 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#123456"
-    tools:context=".ui.SplashFragment">
+    tools:context=".ui.main.SplashFragment">
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:src="@drawable/api_icon"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:foregroundGravity="center"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="45sp"
+        android:padding="25sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/montessat_variable_wght"
         android:text="    NetWork \n API Request"
         android:layout_gravity="center"/>
 

@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_marginVertical="10dp"
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -69,15 +70,15 @@
                 android:id="@+id/bodyLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/body"
+                android:text="@string/completed"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/bodyId"
+                app:layout_constraintEnd_toStartOf="@+id/completedId"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleId" />
 
             <TextView
-                android:id="@+id/bodyId"
+                android:id="@+id/completedId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

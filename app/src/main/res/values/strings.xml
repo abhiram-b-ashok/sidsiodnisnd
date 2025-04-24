@@ -9,4 +9,12 @@
     <string name="get_posts">Get Posts</string>
     <string name="email">Email</string>
     <string name="to_do_lists">To Do Lists</string>
+    <string name="comments">Comments</string>
+    <string name="todo">ToDo</string>
+    <string name="posts">Posts</string>
+    <string name="completed">Completed</string>
+    <string name="name">Name</string>
+    <string name="id">Id</string>
+    <string name="titles">Title</string>
+    <string name="bodies">Body</string>
 </resources>

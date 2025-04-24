@@ -8,16 +8,14 @@ import com.example.coroutinedemo.databinding.GetApiRecyclerLayoutBinding
 import com.example.coroutinedemo.model.users.Users
 
 class ApiGetAdapter(private var list: List<Users>):RecyclerView.Adapter<ApiGetAdapter.ApiGetViewHolder>() {
-
+    var onItemClick: ((Int, Users) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiGetViewHolder {
         val binding = GetApiRecyclerLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ApiGetViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ApiGetViewHolder, position: Int) {
-        holder.uid.text = list[position].userId.toString()
-        holder.title.text = list[position].title
-        holder.body.text = list[position].body
+        holder.bind(list[position], onItemClick)
 
     }
 
@@ -25,9 +23,19 @@ class ApiGetAdapter(private var list: List<Users>):RecyclerView.Adapter<ApiGetAd
         return list.size
     }
     class ApiGetViewHolder(binding: GetApiRecyclerLayoutBinding): RecyclerView.ViewHolder(binding.root) {
-        val uid = binding.userId
+        private val uid = binding.userId
         val title = binding.titleId
         val body = binding.bodyId
+
+        fun bind(item: Users, onItemClick: ((Int, Users) -> Unit)?) {
+            uid.text = item.userId.toString()
+            title.text = item.title
+            body.text = item.body
+            itemView.setOnClickListener {
+                onItemClick?.invoke(adapterPosition, item)
+            }
+
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

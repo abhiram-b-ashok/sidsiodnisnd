@@ -1,8 +1,6 @@
-package com.example.coroutinedemo.ui
+package com.example.coroutinedemo.ui.main
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,10 +31,10 @@ class SplashFragment : Fragment() {
         }
     }
 
-    suspend fun splash()
+    private suspend fun splash()
     {
         delay(2000)
-        findNavController().navigate(R.id.action_splashFragment_to_postsFragment)
+        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
 
     }
 

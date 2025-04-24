@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.coroutinedemo.databinding.FragmentPostsBinding
 import com.example.coroutinedemo.model.users.Users
 import com.example.coroutinedemo.ui.posts.adapters.ApiGetAdapter
+import com.example.coroutinedemo.utils.hide
 import com.example.coroutinedemo.viewmodels.posts.PostApiViewModel
 
 class PostsFragment : Fragment() {
@@ -28,9 +30,15 @@ class PostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ApiGetAdapter(mutableListOf())
+        adapter = ApiGetAdapter(mutableListOf()).apply {
+            onItemClick = { position, item ->
+                findNavController().navigate(PostsFragmentDirections.actionPostsFragmentToPostDetailsFragment(item.userId!!))
+            }
+
+        }
         binding.getPostRecycler.adapter = adapter
         userLiveDataObserver()
+
     }
 
     override fun onResume() {
@@ -40,7 +48,7 @@ class PostsFragment : Fragment() {
 
     private fun userLiveDataObserver() {
       viewModel.userListData.observe(viewLifecycleOwner){
-          Log.e("data_in_view","<<<<<< $it")
+          binding.progressBar.hide()
           adapter.updateData(it)
       }
     }

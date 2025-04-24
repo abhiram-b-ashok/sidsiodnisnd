@@ -1,11 +1,11 @@
-package com.example.coroutinedemo
+package com.example.coroutinedemo.demo_app_api
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.coroutinedemo.R
 import com.example.coroutinedemo.databinding.UserApiRecyclerLayoutBinding
-import com.example.coroutinedemo.model.User
 
 class UserApiAdapter(private val userList:List<User>):RecyclerView.Adapter<UserApiAdapter.UserApiViewHolder>()
 {

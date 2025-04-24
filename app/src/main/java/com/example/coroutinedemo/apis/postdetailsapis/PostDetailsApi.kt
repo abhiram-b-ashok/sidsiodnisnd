@@ -1,36 +1,29 @@
-package com.example.coroutinedemo.apis
+package com.example.coroutinedemo.apis.postdetailsapis
 
 import android.util.Log
-import com.example.coroutinedemo.model.ApiResponse
-import com.example.coroutinedemo.utils.HOST
-import com.example.coroutinedemo.utils.SCHEME
-import com.example.coroutinedemo.utils.USER_PATH_SEGMENT
+import com.example.coroutinedemo.apis.postapis.ApiResponse
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
+import org.json.JSONObject
 
-suspend fun getApiRequest(): ApiResponse = withContext(IO) {
-
-    // 200 - success
-    // 404 - not found
-    // 500 - internal server error
-    // 401 - UnAuthorized Access
-
+suspend fun getDetailsApi(pagenum: Int): DetailApiResponse = withContext(IO) {
     var code = 0
     var exception: Throwable? = null
     val message: String? = null
-    var data : JSONArray? = null
+    var data: JSONObject? = null
 
     try {
-
         val url = HttpUrl.Builder()
-            .scheme(SCHEME)
-            .host(HOST)
-            .addPathSegment(USER_PATH_SEGMENT)
+            .scheme("https")
+            .host("jsonplaceholder.typicode.com")
+            .addPathSegment("posts")
+            .addPathSegment("$pagenum")
             .build()
+
 
         val request = Request.Builder()
             .url(url)
@@ -43,12 +36,14 @@ suspend fun getApiRequest(): ApiResponse = withContext(IO) {
 
         val response = httpClient.newCall(request).execute()
         code = response.code
-        Log.e("response_code","<<<<< $code")
         data = response.body?.string()?.let {
-            JSONArray(it)
+            JSONObject(it)
         }
-    } catch (ex:Exception) {
+
+    } catch (ex: Exception) {
         exception = ex
     }
-    return@withContext ApiResponse(code, exception, message,data)
+
+    return@withContext DetailApiResponse(code, exception, message, data)
+
 }

@@ -1,29 +1,18 @@
-package com.example.coroutinedemo
+package com.example.coroutinedemo.demo_app_api
 
-import android.graphics.pdf.PdfDocument.Page
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
+import com.example.coroutinedemo.R
 import com.example.coroutinedemo.databinding.ActivityMainBinding
-import com.example.coroutinedemo.model.User
-import com.example.coroutinedemo.model.UserRootModel
-import com.example.coroutinedemo.model.parseUserData
 import com.example.coroutinedemo.utils.hide
-import com.example.coroutinedemo.utils.invisible
-import com.example.coroutinedemo.utils.show
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
-import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
