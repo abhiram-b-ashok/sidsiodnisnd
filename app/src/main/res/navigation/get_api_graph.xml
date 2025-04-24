@@ -3,8 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/get_api_graph"
-    app:startDestination="@id/postsFragment">
-
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.coroutinedemo.ui.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_postsFragment"
+            app:destination="@id/postsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/postsFragment"
         android:name="com.example.coroutinedemo.ui.posts.PostsFragment"
@@ -27,5 +35,6 @@
             app:argType="string"/>
 
     </fragment>
+
 
 </navigation>
